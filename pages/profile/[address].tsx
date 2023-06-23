@@ -1,50 +1,49 @@
 import { useContract, useContractRead, useAddress } from "@thirdweb-dev/react";
-import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PLATFORM_CONTRACT } from "../../const/addresses";
 import Container from "../../components/Container/Container";
 import styles from "../../styles/Profile.module.css";
+import { useParams } from "react-router-dom";
 
-export default function ProfilePage() {
+interface ProfileProps {
+  address: string;
+}
+
+interface UserData {
+  username: string;
+  aboutMe: string;
+  posts: string[];
+}
+
+export default function Profile() {
   const address = useAddress();
   const { contract } = useContract(PLATFORM_CONTRACT);
-  const [userName, setUserName] = useState("");
-  const [getAboutMe, setBio] = useState("");
-  const { data: bioData, isLoading: bioLoading } = useContractRead(contract, "getAboutMe", [address]);
-  const { data, isLoading } = useContractRead(contract, "getUsername", [address]);
-  const { data: postsData, isLoading: postsLoading } = useContractRead(contract, "getPostsByAddress", [address]);
+  const { data, isLoading } = useContractRead(contract, "getUserContent", [address])
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    if (!isLoading && data) {
-      setUserName(data);
+    if (data) {
+      const [username, aboutMe, posts] = data;
+      setUserData({ username, aboutMe, posts });
     }
-  }, [data, isLoading]);
+  }, [data]);
 
-  useEffect(() => {
-    if (!bioLoading && bioData) {
-      setBio(bioData);
-    }
-  }, [bioData, bioLoading]);
+  if (isLoading) return <p>Loading...</p>;
 
-  useEffect(() => {
-    if (!address) {
-    }
-  }, [address]);
+  if (!userData) return null;
 
   return (
     <Container maxWidth="lg">
-      <div className="profile-container">
-        <h2 className="username">{userName}</h2>
-        <p className="bio">{getAboutMe}</p>
-        <h3 className="posts-heading">Posts:</h3>
-        {postsLoading ? (
-          <p className="loading">Loading posts...</p>
-        ) : (
-          <ul className="posts-list">
-            {postsData.map((post: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined, index: Key | null | undefined) => (
-              <li className="post" key={index}>{post}</li>
-            ))}
-          </ul>
-        )}
+      <div className={styles.profileHeader}>
+        <h2 className={styles.username}>{userData.username}</h2>
+        <p className={styles.aboutMe}>{userData.aboutMe}</p>
+        </div>
+        <div className={styles.feedContainer}>
+        <ul className={styles.content}>
+          {userData.posts.map((post, index) => (
+            <li key={index}>{post}</li>
+          ))}
+        </ul>
       </div>
     </Container>
   );
