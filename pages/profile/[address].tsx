@@ -1,11 +1,8 @@
 import { useContract, useContractRead, useAddress } from "@thirdweb-dev/react";
-import { useEffect, useState } from "react";
+import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 import { PLATFORM_CONTRACT } from "../../const/addresses";
-import Post from "../../components/post"
 import Container from "../../components/Container/Container";
-import styles from "../../styles/Profile.module.css"
-import MyPosts from "../../components/Profile/Posts/MyPosts";
-import FeedComponent from "../../components/Feed/FeedComponent";
+import styles from "../../styles/Profile.module.css";
 
 export default function ProfilePage() {
   const address = useAddress();
@@ -13,9 +10,8 @@ export default function ProfilePage() {
   const [userName, setUserName] = useState("");
   const [getAboutMe, setBio] = useState("");
   const { data: bioData, isLoading: bioLoading } = useContractRead(contract, "getAboutMe", [address]);
-
-
   const { data, isLoading } = useContractRead(contract, "getUsername", [address]);
+  const { data: postsData, isLoading: postsLoading } = useContractRead(contract, "getPostsByAddress", [address]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -39,10 +35,17 @@ export default function ProfilePage() {
       <div className={styles.profile}>
         <h2>{userName}</h2>
         <p>{getAboutMe}</p>
+        <h3>Posts:</h3>
+        {postsLoading ? (
+          <p>Loading posts...</p>
+        ) : (
+          <ul>
+            {postsData.map((post: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined, index: Key | null | undefined) => (
+              <li key={index}>{post}</li>
+            ))}
+          </ul>
+        )}
       </div>
-      <Post />
-      <FeedComponent />
     </Container>
   );
 }
-

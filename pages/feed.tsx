@@ -8,6 +8,7 @@ export default function Feed() {
 
   return (
     <Container maxWidth="lg">
+      <Post />
       <FeedComponent />
     </Container>
   );
