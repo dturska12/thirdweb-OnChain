@@ -7,7 +7,7 @@ export const NETWORK = Mumbai;
 
 // 2. The address of the marketplace V3 smart contract.
 // Deploy your own: https://thirdweb.com/thirdweb.eth/MarketplaceV3
-export const PLATFORM_CONTRACT = "0x91871009a8cc5d4e31E178336Fc2F6867AA3bB53";
+export const PLATFORM_CONTRACT = "0x6c07B817c489cEDfcA17012cf07D8db121E9537A";
 
 // 3. The address of your NFT collection smart contract.
 export const NFT_COLLECTION_ADDRESS =

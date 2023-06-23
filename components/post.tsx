@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Web3Button } from "@thirdweb-dev/react";
 import styles from "./Post.module.css";
+import { PLATFORM_CONTRACT } from "../const/addresses"
 
 export default function Component() {
   const [postContent, setPostContent] = useState("");
@@ -15,7 +16,7 @@ export default function Component() {
 
   return (
     <div className={styles.container}>
-      <h1>Create Post</h1>
+      <h1>Whats on your mind...</h1>
       <textarea
         className={styles.textarea}
         placeholder="Enter your post content..."
@@ -23,7 +24,7 @@ export default function Component() {
         onChange={handlePostContentChange}
       />
       <Web3Button
-        contractAddress="0x576a1a4aF7dBdFcBd08999050B68463682d8BC34"
+        contractAddress={PLATFORM_CONTRACT}
         action={handleCreatePost}
         className={styles.button}
       >

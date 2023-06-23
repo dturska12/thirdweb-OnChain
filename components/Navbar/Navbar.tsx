@@ -27,6 +27,9 @@ export function Navbar() {
             <Link href="/feed" className={styles.link}>
               Feed
             </Link>
+            <Link href="/message" className={styles.link}>
+              DMs
+            </Link>
           </div>
         </div>
 
@@ -35,7 +38,7 @@ export function Navbar() {
             <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
           </div>
           {address && (
-            <Link href="/feed" className={styles.link} >
+            <Link className={styles.link} href={`/profile/${address}`}>
               <Image
                 className={styles.profileImage}
                 src="/user-icon.png"

@@ -10,7 +10,7 @@
   height: 100vh;
 }
 
-.open-modal-button {
+.openModalButton {
   padding: 12px 24px;
   border-radius: 4px;
   background-color: #007bff;
@@ -22,7 +22,19 @@
 .open-modal-button:hover {
   background-color: #0056b3;
 }
+.profile {
+  margin-top: 20px;
+}
 
+.profile h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.profile p {
+  font-size: 16px;
+  margin-top: 10px;
+}
 
 .modal-container {
   position: fixed;
