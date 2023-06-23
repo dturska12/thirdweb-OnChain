@@ -37,7 +37,7 @@ export default function Component(): JSX.Element {
 
   const handleUsernameClick = (address: string) => {
     // Redirect to the profile page with the associated address
-    window.location.href = `/profile/${address}`;
+    window.location.href = `/account/${address}`;
   };
 
   return (

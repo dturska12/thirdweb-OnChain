@@ -32,16 +32,16 @@ export default function ProfilePage() {
 
   return (
     <Container maxWidth="lg">
-      <div className={styles.profile}>
-        <h2>{userName}</h2>
-        <p>{getAboutMe}</p>
-        <h3>Posts:</h3>
+      <div className="profile-container">
+        <h2 className="username">{userName}</h2>
+        <p className="bio">{getAboutMe}</p>
+        <h3 className="posts-heading">Posts:</h3>
         {postsLoading ? (
-          <p>Loading posts...</p>
+          <p className="loading">Loading posts...</p>
         ) : (
-          <ul>
+          <ul className="posts-list">
             {postsData.map((post: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined, index: Key | null | undefined) => (
-              <li key={index}>{post}</li>
+              <li className="post" key={index}>{post}</li>
             ))}
           </ul>
         )}
